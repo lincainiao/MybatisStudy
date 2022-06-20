@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lin.mapper.UserMapper">
+    <resultMap id="UserMap" type="User">
+        <!--<result column="create_time" property="date"/>-->
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <!--在当前Mapper中添加cache标签-->
+    <!--<cache-->
+    <!--    eviction="FIFO"-->
+    <!--    flushInterval="60000"-->
+    <!--    size="512"-->
+    <!--    readOnly="true"/>-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <select id="getUserListById" resultMap="UserMap">
+        select * from user where id = ${id}
+    </select>
+    <select id="getUserList" resultMap="UserMap">
+        select * from user
+    </select>
+
+    <insert id="updateUser" parameterType="map">
+        update user set id = 222 where id = #{id}
+    </insert>
+</mapper>

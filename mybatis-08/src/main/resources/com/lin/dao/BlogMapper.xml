@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lin.dao.BlogMapper">
+    <resultMap id="BlogMap" type="Blog">
+        <!--<result column="create_time" property="createTime"/>-->
+    </resultMap>
+
+    <select id="getBlogList" resultMap="BlogMap">
+        select * from blog
+    </select>
+
+    <select id="getBlogListIf" resultMap="BlogMap" parameterType="map">
+        select * from blog
+        <where>
+        <include refid="if-title-author"></include>
+        </where>
+    </select>
+    <sql id="if-title-author">
+        <if test="title != null">
+            title = #{title}
+        </if>
+        <if test="author != null">
+            and author = #{author}
+        </if>
+    </sql>
+
+    <select id="getBlogListChoose" parameterType="map" resultMap="BlogMap">
+        select * from blog
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <when test="title != null">
+                    title = #{title}
+                </when>
+                <otherwise>
+                    views = #{views}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <insert id="updateBlogSet" parameterType="map">
+        update blog
+        <set>
+            <if test="newId != null">
+                id = #{newId},
+            </if>
+            <if test="title != null">
+                title = #{title}
+            </if>
+        </set>
+        where id = #{oldId}
+    </insert>
+
+    <insert id="addBlog" parameterType="map">
+        insert into blog values (#{id},#{title},#{author},#{createTime},#{views})
+    </insert>
+
+    <select id="getBlogForEach" parameterType="map" resultMap="BlogMap">
+        select * from blog
+        <where>
+            <foreach collection="ids" item="id" open="(" separator="or" close=")">
+                id = #{id}
+            </foreach>
+        </where>
+    </select>
+    
+
+</mapper>

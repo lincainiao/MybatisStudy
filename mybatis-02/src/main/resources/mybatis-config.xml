@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<!--引入外部配置文件-->
+    <properties resource="db.properties">
+<!--如果配置文件中没有该属性，可以向这里添加，如果有相同的属性，则优先使用外部文件-->
+<!--<property name="username" value="root"/>-->
+    </properties>
+
+    <typeAliases>
+        <package name="com.lin.pojo"/>
+    </typeAliases>
+
+    <environments default="test">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/lin/dao/UserMapper.xml"/>
+<!--        <mapper class="com.lin.dao.UserMapper"/>-->
+<!--        <package name="com.lin.dao"/>-->
+    </mappers>
+</configuration>

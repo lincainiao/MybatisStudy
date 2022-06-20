@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="db.properties">
+    </properties>
+
+    <!--<settings>-->
+    <!--    <setting name="logImpl" value="LOG4J"/>-->
+    <!--</settings>-->
+
+    <typeAliases>
+        <typeAlias type="com.lin.pojo.User" alias="User"/>
+        <typeAlias type="com.lin.pojo.Teacher" alias="Teacher"/>
+        <typeAlias type="com.lin.pojo.Student" alias="Student"/>
+    </typeAliases>
+
+    <environments default="test">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--<mapper resource="com/lin/dao/UserMapper.xml"/>-->
+        <!--<mapper resource="com/lin/dao/StudentMapper.xml"/>-->
+        <!--<mapper resource="com/lin/dao/TeacherMapper.xml"/>-->
+        <!--<mapper class="com.lin.dao.StudentMapper"/>-->
+        <!--<mapper class="com.lin.dao.UserMapper"/>-->
+        <!--<mapper class="com.lin.dao.TeacherMapper"/>-->
+        <package name="com.lin.dao"/>
+    </mappers>
+</configuration>
